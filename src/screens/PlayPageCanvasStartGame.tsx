@@ -14,12 +14,14 @@ export interface PlayPageCanvasStartGameProps {
   actions?: {
     "start-game-1"?: () => void;
   };
+  message?: string;
+  highScore?: number | null;
 
 }
 
 export type PlayPageCanvasStartGameActionCallbacks = NonNullable<PlayPageCanvasStartGameProps["actions"]>;
 
-export function PlayPageCanvasStartGame({ actions }: PlayPageCanvasStartGameProps) {
+export function PlayPageCanvasStartGame({ actions, message = "", highScore = null }: PlayPageCanvasStartGameProps) {
   return (
     <>
       {/* Root Surface: SURF_PLAY_PAGE */}
@@ -42,8 +44,8 @@ export function PlayPageCanvasStartGame({ actions }: PlayPageCanvasStartGameProp
               {/* High Score Status Observable */}
               <div className="flex flex-col items-end">
                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">High Score</span>
-                <div className="text-xl font-mono font-bold text-amber-400" data-setfarm-element-ref="E000002" role="status" aria-label="High score" data-observable-refs="OBS_START_GAME_HIGH_SCORE_VALUE">
-                  {/* Initial state before action is empty/null, styled placeholder */}
+                <div className="text-xl font-mono font-bold text-amber-400" data-setfarm-element-ref="E000002" role="status" aria-label="High score" data-observable-refs="OBS_START_GAME_HIGH_SCORE_VALUE" data-value={highScore === null ? undefined : String(highScore)}>
+                  {highScore === null ? "" : highScore}
                 </div>
               </div>
       
@@ -52,7 +54,7 @@ export function PlayPageCanvasStartGame({ actions }: PlayPageCanvasStartGameProp
                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">System</span>
                 <div className="text-sm font-medium text-emerald-400 flex items-center gap-1.5" data-setfarm-element-ref="E000003" role="status" aria-label="Game status" data-observable-refs="OBS_START_GAME_GAME_STARTED_MESSAGE">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  Ready to Play
+                  {message || "Ready to Play"}
                 </div>
               </div>
             </div>
